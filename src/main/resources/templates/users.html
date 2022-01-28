@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>users</title>
+</head>
+<body>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+<div align="center">
+    <h2> Table for Users </h2>
+    <table width="1000" bgcolor="#9BD6E7" cellspacing="0" cellpadding="5" border="2" align="center">
+        <tr>
+            <center><th>Id</th></center>
+            <center><th>Login</th></center>
+            <center><th>Password</th></center>
+            <center><th>Name</th></center>
+            <center><th>Last Name</th></center>
+            <center><th>Email</th></center>
+<!--            <center><th>Roles</th></center>-->
+            <center><th>ActionE</th></center>
+            <center><th>ActionD</th></center>
+
+        </tr>
+        <tbody>
+        <tr th:each="user : ${userList}">
+            <td th:text="${user.id}"></td>
+            <td th:text="${user.username}"></td>
+            <td th:text="${user.password}"></td>
+            <td th:text="${user.name}"></td>
+            <td th:text="${user.lastName}"></td>
+            <td th:text="${user.email}"></td>
+<!--            <td th:each="role : ${roles}">-->
+<!--                <label>-->
+<!--                    <input th:text="${user.getRoles()}">-->
+<!--                </label>-->
+<!--            </td>-->
+            <td>
+                <center><a th:method="GET" th:href="@{/admin/edit/{id}(id=${user.getId()})}">EDIT</a></center>
+            </td>
+            <td>
+                <center><a th:method="GET" th:href="@{/admin/delete/{id}(id=${user.getId()})}">DELETE</a></center>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <br/>
+    <center><a th:method="GET" th:href="@{/admin/add}">add User</a></center>
+</div>
+</body>
+</html>

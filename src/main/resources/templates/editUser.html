@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edite Profile</title>
+</head>
+<body>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+<div align="center">
+    <h2> Edite User </h2>
+    <form  th:action="@{/admin/editUser}" th:object="${user}" th:method="post">
+        <table width="1000" bgcolor="#9BD6E7" cellspacing="0" cellpadding="5" border="2">
+            <tr>
+                <th>Login</th>
+                <th>Password</th>
+                <th>Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Roles</th>
+            </tr>
+            <tr th:object="${user}">
+                <input type="hidden" th:field="*{id}"/>
+                <td>
+                    <label for="login"></label>
+                    <center><input type="text" id="login" th:field="*{username}" placeholder="Login.."></center>
+                </td>
+                <td>
+                    <label for="password"></label>
+                    <center><input type="text" id="password" th:field="*{password}" placeholder="Password.."></center>
+                </td>
+                <td>
+                    <label for="name"></label>
+                    <center><input type="text" id="name" th:field="*{name}" placeholder="Name.."></center>
+                </td>
+                <td>
+                    <label for="lastName"></label>
+                    <center><input type="text" id="lastname" th:field="*{lastName}" placeholder="Last name.."></center>
+                </td>
+                <td>
+                    <label for="email"></label>
+                    <center><input type="email" id="email" th:field="*{email}" placeholder="Email.."></center>
+                </td>
+                <td>
+                    <label for="roles"></label>
+                    <select class="form-control" name="authorities" id="roles">
+                        <option value="">Select roles</option >
+                        <option th:each="role : ${roles}"
+                                th:text="${role.getRole()}"
+                                th:value="${role.getId()}">
+                        </option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+        <br/>
+        <input type="submit" value="Update User"/>
+    </form>
+    <br/>
+    <center><a href="/admin/users"><input type="submit" value="back"></a></center>
+</div>
+</body>
+</html>

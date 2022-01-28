@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/logout}" method="post">
+    <input type="submit" value="Sign Out"/>
+</form>
+<div align="center">
+    <h2> Admin information </h2>
+    <table width="1000" bgcolor="#9BD6E7" cellspacing="0" cellpadding="5" border="2" align="center">
+        <tr>
+            <th>Id</th>
+            <th>Login</th>
+            <th>Password</th>
+            <th>Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+<!--            <th>Roles</th>-->
+        </tr>
+        <tbody>
+            <tr>
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.username}"></td>
+                <td th:text="${user.password}"></td>
+                <td th:text="${user.name}"></td>
+                <td th:text="${user.lastName}"></td>
+                <td th:text="${user.email}"></td>
+<!--                <td th:text="${user.getAuthorities()}"></td>-->
+            </tr>
+        </tbody>
+    </table>
+    <br/>
+    <center><a href="/admin/users"><input type="submit" value="Operations for administrator"></a></center>
+</div>
+</body>
+</html>

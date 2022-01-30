@@ -37,7 +37,7 @@ public class AdminController {
     @GetMapping(value = "/users")
     public ModelAndView allUsers(ModelAndView modelAndView) {
         List<User> userList = userService.listUsers();
-        modelAndView.setViewName("users");
+        modelAndView.setViewName("adminPage");
         modelAndView.addObject("userList", userList);
         return modelAndView;
     }

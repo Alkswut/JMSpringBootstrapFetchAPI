@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<body>
+<div th:fragment="header">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid text-white">
+            <span style=" font-weight: bold;" th:text="${#authentication.principal.username}"></span>
+            <span>123</span>
+            <span th:text="${'with roles: '+ #authentication.principal.rolesAsString}"></span>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <div th:fragment="logout" class="ml-auto">
+                    <a style="color: #cccccc" href="/logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+</div>
+</body>
+</html>

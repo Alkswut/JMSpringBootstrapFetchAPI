@@ -22,14 +22,14 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "first_name")
+    private String firstName;
 
-    @Column(name = "lastname")
+    @Column(name = "last_name")
     private String lastName;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "age")
+    private int age;
 
     @ManyToMany(fetch = FetchType.EAGER)//(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles",
@@ -45,19 +45,19 @@ public class User implements UserDetails {
         this.id = user.getId();
         this.username = user.getUsername();
         this.password = user.getPassword();
-        this.name = user.getName();
+        this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
-        this.email = user.getEmail();
+        this.age = user.getAge();
         this.roles = user.getRoles();
     }
 
-    public User(Long id, String username, String password, String name, String lastName, String email, Set<Role> roles) {
+    public User(Long id, String username, String password, String firstName, String lastName, int age, Set<Role> roles) {
         this.id = id;
         this.username = username;
         this.password = password;
-        this.name = name;
+        this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
+        this.age = age;
         this.roles = roles;
     }
 
@@ -87,12 +87,12 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstName() {
+        return firstName;
     }
 
     public void setLastName(String lastName) {
@@ -103,12 +103,12 @@ public class User implements UserDetails {
         return lastName;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setAge(int age) {
+        this.age = age;
     }
 
-    public String getEmail() {
-        return email;
+    public int getAge() {
+        return age;
     }
 
     public Set<Role> getRoles() {
@@ -150,9 +150,9 @@ public class User implements UserDetails {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
+                ", age='" + age + '\'' +
                 ", roles=" + roles +
                 '}';
     }

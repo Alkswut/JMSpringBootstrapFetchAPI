@@ -22,9 +22,9 @@ public class UserController {
 
     @GetMapping("")
     public ModelAndView userPage(ModelAndView modelAndView, Principal principal) {
-        User user = userService.findByUsername(principal.getName());
-        modelAndView.addObject("user", user);
-        modelAndView.setViewName("user");
+        User userIn = userService.findByUsername(principal.getName());
+        modelAndView.addObject("userIn", userIn);
+        modelAndView.setViewName("userPage");
         return modelAndView;
     }
 }

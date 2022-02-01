@@ -26,29 +26,17 @@ public class AdminController {
         this.roleService = roleService;
     }
 
-    @GetMapping("")
-    public ModelAndView adminPage(ModelAndView modelAndView, Principal principal) {
-        User user = userService.findByUsername(principal.getName());
-        modelAndView.addObject("user", user);
-        modelAndView.setViewName("admin");
-        return modelAndView;
-    }
-
-    @GetMapping(value = "/users")
-    public ModelAndView allUsers(ModelAndView modelAndView) {
+    @GetMapping(value = "")
+    public ModelAndView allUsers(ModelAndView modelAndView,
+                                 Principal principal) {
+        User userIn = userService.findByUsername(principal.getName());
         List<User> userList = userService.listUsers();
-        modelAndView.setViewName("adminPage");
-        modelAndView.addObject("userList", userList);
-        return modelAndView;
-    }
-
-    @GetMapping(value = "/add")
-    public ModelAndView add(ModelAndView modelAndView) {
-        User user = new User();
         List<Role> roles = roleService.getRolesList();
         modelAndView.addObject("roles", roles);
-        modelAndView.addObject("user", user);
-        modelAndView.setViewName("addUser");
+        modelAndView.addObject("userIn", userIn);
+        modelAndView.addObject("user", new User());
+        modelAndView.addObject("userList", userList);
+        modelAndView.setViewName("adminPage");
         return modelAndView;
     }
 
@@ -57,20 +45,10 @@ public class AdminController {
                                 @ModelAttribute("user") User user,
                                 @RequestParam("authorities") List<String> preRoles,
                                 ModelAndView modelAndView) {
-        modelAndView.setViewName("redirect:/admin/users");
+        modelAndView.setViewName("redirect:/admin");
         Set<Role> roles = roleService.getSetRoles(preRoles);
         user.setRoles(roles);
         userService.registerUser(user);
-        return modelAndView;
-    }
-
-    @GetMapping(value = "/edit/{id}")
-    public ModelAndView edit(@PathVariable("id") int id, ModelAndView modelAndView) {
-        User user = userService.getUserById(id);
-        List<Role> roles = roleService.getRolesList();
-        modelAndView.addObject("roles", roles);
-        modelAndView.addObject("user", user);
-        modelAndView.setViewName("editUser");
         return modelAndView;
     }
 
@@ -80,7 +58,7 @@ public class AdminController {
                                  @RequestParam("authorities") List<String> preRoles,
                                  @RequestBody String body, // for test
                                  ModelAndView modelAndView) {
-        modelAndView.setViewName("redirect:/admin/users");
+        modelAndView.setViewName("redirect:/admin");
         Set<Role> roles = roleService.getSetRoles(preRoles);
         user.setRoles(roles);
         userService.editUser(user);
@@ -89,9 +67,11 @@ public class AdminController {
 
     @GetMapping(value = "/delete/{id}")
     public ModelAndView deleteUser(@PathVariable("id") int id, ModelAndView modelAndView) {
-        modelAndView.setViewName("redirect:/admin/users");
+        modelAndView.setViewName("redirect:/admin");
         User user = userService.getUserById(id);
         userService.deleteUser(user);
         return modelAndView;
     }
+
+
 }

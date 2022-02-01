@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<body>
+<div th:fragment="head">
+    <div class="navbar">
+        <nav class="navbar fixed-top navbar-expand bg-dark">
+            <div class="container-fluid text-white">
+                <span th:text="${userIn.username}"></span>
+                <span>&nbsp;</span>
+                <span th:text="'with roles: ' + ${userIn.getStringRoles()}"></span>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <div th:fragment="logout" class="ml-auto">
+                        <a style="color: darkgray" href="/logout">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+</body>
+</html>

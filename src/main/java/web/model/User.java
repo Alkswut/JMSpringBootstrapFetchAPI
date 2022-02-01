@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "users")
@@ -59,6 +60,10 @@ public class User implements UserDetails {
         this.lastName = lastName;
         this.age = age;
         this.roles = roles;
+    }
+
+    public String getStringRoles() {
+        return roles.stream().map(role -> role.getRole().replace("ROLE_", "")).collect(Collectors.joining(" "));
     }
 
     public void setId(Long id) {

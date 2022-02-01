@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+
+    <link rel="icon" href="/templates/icon/leaf.ico"/>
+
+    <title>userPage</title>
+</head>
+
+<body class="bg-light">
+<!--/////////////////////////////////////////////////////HEADER////////////////////////////////////////////////////-->
+<header th:replace="fragments/headPage :: head"></header>
+<!--<header>-->
+<!--    <div class="navbar">-->
+<!--        <nav class="navbar fixed-top navbar-expand bg-dark">-->
+<!--            <div class="container-fluid text-white">-->
+<!--                <span th:text="${userIn.username}"></span>-->
+<!--                <span>&nbsp;</span>-->
+<!--                <span th:text="'with roles: ' + ${userIn.getStringRoles()}"></span>-->
+<!--                <div class="collapse navbar-collapse" id="navbarSupportedContent">-->
+<!--                    <div th:fragment="logout" class="ml-auto">-->
+<!--                        <a style="color: darkgray" href="/logout">Logout</a>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </nav>-->
+<!--    </div>-->
+<!--</header>-->
+<!--/////////////////////////////////////////////////////BODY//////////////////////////////////////////////////////-->
+<main>
+    <div class="d-flex px-0">
+        <div class="bg-white col-2 p-xxl-0 mt-4">
+            <ul class="nav flex-column nav-pills mb-auto">
+
+                <li class="nav-link" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+                    <a class="nav-link link-dark"  aria-current="page" href="/admin/">
+                        Admin
+                    </a>
+                </li>
+
+                <li class="nav-link" sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
+                    <a class="nav-link active" aria-current="page" href="/user/">
+                        User
+                    </a>
+                </li>
+
+            </ul>
+        </div>
+<!--/////////////////////////////////////////////content////////////////////////////////////////////////-->
+        <div class="col-10 justify-content-center" style="min-height: 90vh;">
+            <div class="container mt-5">
+                <h3>User information-page</h3>
+                <div class="tab-content">
+                    <div id="userTable" class="tab-pane active bg-white ml-0 mr-0 p-0 border">
+                        <nav class="navbar navbar-default bg-light mr-0 ml-0 border">
+                            <div class="container-fluid">
+                                <div class="navbar-header">
+                                    <a class="navbar-brand text-dark text-style-bold">About user</a>
+                                </div>
+                            </div>
+                        </nav>
+                        <div class="m-1">
+                            <table class="table table-striped border">
+                                <thead>
+                                <tr>
+                                    <th> ID</th>
+                                    <th> First Name</th>
+                                    <th> Last Name</th>
+                                    <th> Age</th>
+                                    <th> Email</th>
+                                    <th> Role</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td><span th:text="${userIn.id}">id</span></td>
+                                    <td><span th:text="${userIn.firstName}">first name</span></td>
+                                    <td><span th:text="${userIn.lastName}">last name</span></td>
+                                    <td><span th:text="${userIn.age}">age</span></td>
+                                    <td><span th:text="${userIn.username}">login</span></td>
+                                    <td><span th:text="${userIn.getStringRoles()}">roles</span></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<!--/////////////////////////////////////////////////////BOTTOM////////////////////////////////////////////////////-->
+<footer>
+    <div class="col-12 text-center border-bottom">
+        <h4> Kata Academy </h4>
+    </div>
+</footer>
+<!--//////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

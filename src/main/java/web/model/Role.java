@@ -40,6 +40,10 @@ public class Role implements GrantedAuthority {
         return role;
     }
 
+    public String getShortNameRole() {
+        return role.replace("ROLE_", "");
+    }
+
     public void setRole(String role) {
         this.role = role;
     }

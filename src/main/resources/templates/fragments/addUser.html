@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>add new user</title>
+</head>
+<body>
+<div th:fragment="add">
+    <div id="newUser" role="tabpanel" aria-labelledby="newUser-tab"
+         class="tab-pane fade bg-white border rounded pl-0 pr-0">
+        <nav class="navbar navbar-default bg-light mr-0 ml-0 border">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand text-dark text-style-bold">Add new user</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container m-3">
+            <form action="#" th:action="@{/admin/addUser}" th:object="${user}" th:method="post"
+                  class="ml-auto mr-auto d-flex flex-column justify-content-center align-items-center col-5">
+                <div class="form-group">
+                    <label for="firstName" class="d-flex justify-content-center font-weight-bold">firstName</label>
+                    <input type="text" th:field="*{firstName}" class="form-control" id="firstName"
+                           placeholder="Name..">
+                </div>
+                <div class="form-group">
+                    <label for="lastName" class="d-flex justify-content-center font-weight-bold">lastname</label>
+                    <input type="text" th:field="*{lastName}" class="form-control" id="lastName"
+                           placeholder="Last name..">
+                </div>
+                <div class="form-group">
+                    <label for="age"
+                           class="d-flex justify-content-center font-weight-bold">age</label>
+                    <input type="number" th:field="*{age}" class="form-control" id="age"
+                           placeholder="Age..">
+                </div>
+                <div class="form-group">
+                    <label for="email"
+                           class="d-flex justify-content-center font-weight-bold">Email</label>
+                    <input type="email" th:field="*{username}" class="form-control" id="email"
+                           placeholder="Email..">
+                </div>
+                <div class="form-group">
+                    <label for="password" class="d-flex justify-content-center font-weight-bold">Password</label>
+                    <input type="password" th:field="*{password}" class="form-control" id="password"
+                           placeholder="Password..">
+                </div>
+
+                <div class="form-group">
+                    <label for="roles"
+                           class="d-flex justify-content-center font-weight-bold">Role</label>
+                    <select multiple class="form-control" style="width:210px" id="roles" size="2"
+                            name="authorities">
+                        <option
+                                th:each="role : ${roles}"
+                                th:text="${role.role}"
+                                th:value="${role.id}">
+                        </option>
+                    </select>
+                </div>
+                <button type="submit" class="d-flex justify-content-center btn btn-success">Add
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

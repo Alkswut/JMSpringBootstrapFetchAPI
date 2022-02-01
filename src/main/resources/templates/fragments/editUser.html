@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div class="modal fade" th:fragment="editUser" th:id="'userEdit'+${user.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit user</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form th:id="'form'+${user.id}"  action="#" th:action="@{/admin/update}" method="put">
+                    <div class="form-group">
+                        <label for="id" class="d-flex justify-content-center font-weight-bold">ID</label>
+                        <input type="text" id="id" name="id" th:value="${user.id}" class="form-control" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label for="firstname" class="d-flex justify-content-center font-weight-bold">firstName</label>
+                        <input type="text" class="form-control" id="firstname" name="firstname" placeholder="Enter name" th:value="${user.firstname}">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastname" class="d-flex justify-content-center font-weight-bold">lastname</label>
+                        <input type="text" class="form-control" id="lastname" name="lastname" placeholder="Enter last name" th:value="${user.lastname}">
+                    </div>
+                    <div class="form-group">
+                        <label for="age" class="d-flex justify-content-center font-weight-bold">age</label>
+                        <input type="number" class="form-control" id="age" name="age" placeholder="Enter age" th:value="${user.age}">
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="d-flex justify-content-center font-weight-bold">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter email" th:value="${user.email}">
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="d-flex justify-content-center font-weight-bold">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" th:value="${user.password}" readonly>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sel2m" class="d-flex justify-content-center font-weight-bold">Role</label>
+                        <select multiple class="form-control" size="2" id="sel2m" name="authorities">
+                            <option
+                                    th:each="role : ${allRoles}"
+                                    th:text="${role.name}"
+                                    th:value="${role.id}"
+                                    th:selected="${user.roles.contains(role)}">
+                            </option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" th:form="'form'+${user.id}">Edit</button>
+            </div>
+        </div>
+    </div>
+</div>

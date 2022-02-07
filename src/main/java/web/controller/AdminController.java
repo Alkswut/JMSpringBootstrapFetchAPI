@@ -1,7 +1,12 @@
 package web.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -14,8 +19,8 @@ import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
-@Controller
-@RequestMapping("/admin")
+@RestController
+@RequestMapping(value = "/admin")
 public class AdminController {
     private final UserService userService;
     private final RoleService roleService;
@@ -32,46 +37,46 @@ public class AdminController {
         User userIn = userService.findByUsername(principal.getName());
         List<User> userList = userService.listUsers();
         List<Role> roles = roleService.getRolesList();
-        modelAndView.addObject("roles", roles);
         modelAndView.addObject("userIn", userIn);
+        modelAndView.addObject("roles", roles);
         modelAndView.addObject("user", new User());
         modelAndView.addObject("userList", userList);
         modelAndView.setViewName("adminPage");
         return modelAndView;
     }
 
+    @GetMapping(value = "/getListUsers")
+    public ResponseEntity<List<User>> getListUsers() {
+        List<User> userList = userService.listUsers();
+        return userList != null && !userList.isEmpty()
+                ? new ResponseEntity<>(userList, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping(value = "/getUserById/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable("id") Long id) {
+        User user = userService.getUserById(id);
+        return user != null
+                ? new ResponseEntity<>(user, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @PostMapping(value = "/addUser")
-    public ModelAndView addUser(@Validated(User.class)
-                                @ModelAttribute("user") User user,
-                                @RequestParam("authorities") List<String> preRoles,
-                                ModelAndView modelAndView) {
-        modelAndView.setViewName("redirect:/admin");
-        Set<Role> roles = roleService.getSetRoles(preRoles);
-        user.setRoles(roles);
+    public ResponseEntity<User> addUser(@RequestBody User user) {
         userService.registerUser(user);
-        return modelAndView;
+        return ResponseEntity.ok().body(user);
     }
 
-    @PostMapping(value = "/editUser")
-    public ModelAndView editUser(@Validated(User.class)
-                                 @ModelAttribute("user") User user,
-                                 @RequestParam("authorities") List<String> preRoles,
-                                 @RequestBody String body, // for test
-                                 ModelAndView modelAndView) {
-        modelAndView.setViewName("redirect:/admin");
-        Set<Role> roles = roleService.getSetRoles(preRoles);
-        user.setRoles(roles);
+    @PutMapping(value = "/userEdit")
+    public ResponseEntity<User> editUser(@RequestBody User user) {
         userService.editUser(user);
-        return modelAndView;
+        return ResponseEntity.ok().body(user);
     }
 
-    @GetMapping(value = "/delete/{id}")
-    public ModelAndView deleteUser(@PathVariable("id") int id, ModelAndView modelAndView) {
-        modelAndView.setViewName("redirect:/admin");
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<User> deleteUser(@PathVariable("id") Long id) {
         User user = userService.getUserById(id);
         userService.deleteUser(user);
-        return modelAndView;
+        return new ResponseEntity<>(HttpStatus.OK);
     }
-
-
 }

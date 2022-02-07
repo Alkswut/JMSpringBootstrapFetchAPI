@@ -53,7 +53,6 @@ public class UserDetailsServiceImpl implements UserDetailsService, UserService {
     }
 
     @Transactional
-    @Override
     public User getUserById(long id) {
         return userRepository.getById(id);
     }

@@ -9,5 +9,4 @@ public class JmSpringSecurityBootApplication {
     public static void main(String[] args) {
         SpringApplication.run(JmSpringSecurityBootApplication.class, args);
     }
-
 }

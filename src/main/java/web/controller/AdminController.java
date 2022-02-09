@@ -3,13 +3,9 @@ package web.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Controller;
-import org.springframework.stereotype.Repository;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import web.dto.UserEdited;
 import web.model.Role;
 import web.model.User;
 import web.service.RoleService;
@@ -17,7 +13,6 @@ import web.service.UserService;
 
 import java.security.Principal;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping(value = "/admin")
@@ -62,14 +57,14 @@ public class AdminController {
     }
 
     @PostMapping(value = "/addUser")
-    public ResponseEntity<User> addUser(@RequestBody User user) {
-        userService.registerUser(user);
+    public ResponseEntity<User> addUser(@RequestBody UserEdited userEdited) {
+        User user = userService.registerUser(userEdited);
         return ResponseEntity.ok().body(user);
     }
 
     @PutMapping(value = "/userEdit")
-    public ResponseEntity<User> editUser(@RequestBody User user) {
-        userService.editUser(user);
+    public ResponseEntity<User> editUser(@RequestBody UserEdited userEdited) {
+        User user = userService.editUser(userEdited);
         return ResponseEntity.ok().body(user);
     }
 

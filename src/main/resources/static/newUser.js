@@ -1,13 +1,13 @@
 function newUser() {
     let form = window.formNewUser.newRoles;
-    let newRoles = "";
+    let newRoles = [];
     let rolesList = document.createElement('ul');
 
     for (let i = 0; i < form.length; i++) {
         let option = form.options[i];
         let role = document.createElement('li');
         if (option.selected) {
-            newRoles = newRoles.concat(option.value + ((i < (form.length - 1)) ? "," : ""));
+            newRoles.push(option.value);
 
             role.textContent = option.value + " ";
             rolesList.appendChild(role);
@@ -17,10 +17,10 @@ function newUser() {
     fetch('http://localhost:8080/admin/addUser', {
         method: 'POST',
         body: JSON.stringify({
-            name: window.formNewUser.newFirstName.value,
+            firstName: window.formNewUser.newFirstName.value,
             lastName: window.formNewUser.newLastName.value,
             age: window.formNewUser.newAge.value,
-            email: window.formNewUser.newUserName.value,
+            username: window.formNewUser.newUserName.value,
             password: window.formNewUser.newPassword.value,
             roles: newRoles
         }),

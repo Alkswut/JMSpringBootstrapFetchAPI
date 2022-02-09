@@ -1,5 +1,6 @@
 package web.service;
 
+import web.dto.UserEdited;
 import web.model.User;
 
 import java.util.List;
@@ -16,4 +17,9 @@ public interface UserService {
     void editUser(User user);
 
     User getUserById(long id);
+
+    User editUser(UserEdited user);
+
+    User registerUser(UserEdited user);
 }
+

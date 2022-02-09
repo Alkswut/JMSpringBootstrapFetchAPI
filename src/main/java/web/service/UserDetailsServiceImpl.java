@@ -5,20 +5,27 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import web.dto.UserEdited;
+import web.model.Role;
 import web.model.User;
+import web.repository.RoleRepository;
 import web.repository.UserRepository;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Primary
 public class UserDetailsServiceImpl implements UserDetailsService, UserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
 
-    public UserDetailsServiceImpl(UserRepository userRepository) {
+    public UserDetailsServiceImpl(UserRepository userRepository, RoleRepository roleRepository) {
         this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
     }
 
     @Transactional
@@ -31,6 +38,11 @@ public class UserDetailsServiceImpl implements UserDetailsService, UserService {
     @Override
     public List<User> listUsers() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public User registerUser(UserEdited userEdited) {
+        return userRepository.save(toUser(userEdited));
     }
 
     @Transactional
@@ -50,6 +62,25 @@ public class UserDetailsServiceImpl implements UserDetailsService, UserService {
     @Override
     public void editUser(User user) {
         userRepository.save(user);
+    }
+
+    @Override
+    public User editUser(UserEdited userEdited) {
+        return userRepository.save(toUser(userEdited));
+    }
+
+    private User toUser(UserEdited userEdited) {
+        User user = new User();
+        user.setId(userEdited.getId());
+        user.setUsername(userEdited.getUsername());
+        user.setPassword(userEdited.getPassword());
+        user.setFirstName(userEdited.getFirstName());
+        user.setLastName(userEdited.getLastName());
+        user.setAge(userEdited.getAge());
+        Set<String> listRoles = userEdited.getRoles();
+        List<Role> roles = roleRepository.findAll();
+        user.setRoles(roles.stream().filter(role -> listRoles.contains(role.getRole())).collect(Collectors.toSet()));
+        return user;
     }
 
     @Transactional

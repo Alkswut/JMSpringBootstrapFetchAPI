@@ -114,7 +114,8 @@ function getModalEdit(id) {
 function editUser() {
 
     let form = window.formEditUser.editedRoles;
-    let newRoles = "";
+    const newRoles = [];
+
 
     let rolesList = document.createElement('ul');
 
@@ -122,25 +123,25 @@ function editUser() {
         let option = form.options[i];
         let role = document.createElement('li');
         if (option.selected) {
-            newRoles = newRoles.concat(option + (i < (form.length - 1) ? "," : ""));
+            newRoles.push(option.value);
             role.textContent = option.value.substring(5, option.value.length) + " ";
             rolesList.appendChild(role);
         }
     }
-
     let id = window.formEditUser.editedId.value;
 
     fetch('http://localhost:8080/admin/userEdit', {
         method: 'PUT',
         body: JSON.stringify({
-            id: window.formEditUser.editedId.value,
-            firstName: window.formEditUser.editedFirstName.value,
-            lastName: window.formEditUser.editedLastName.value,
-            age: window.formEditUser.editedAge.value,
-            username: window.formEditUser.editedUserName.value,
-            password: window.formEditUser.editedPassword.value,
-            roles: newRoles
-        }),
+                id: window.formEditUser.editedId.value,
+                firstName: window.formEditUser.editedFirstName.value,
+                lastName: window.formEditUser.editedLastName.value,
+                age: window.formEditUser.editedAge.value,
+                username: window.formEditUser.editedUserName.value,
+                password: window.formEditUser.editedPassword.value,
+                roles: newRoles
+            }
+        ),
         headers: {"Content-type": "application/json; charset=UTF-8"}
     })
         .then(response => {
